@@ -1,0 +1,94 @@
+* {
+  text-decoration: none;
+}
+
+#plasmo-shadow-container {
+  display: inline-block;
+  font-family: "Segoe UI", Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 20px;
+  word-wrap: break-word;
+  font-weight: 400;
+  text-overflow: unset;
+  min-width: 0;
+  font-size: 15px;
+  scrollbar-color: rgb(185, 202, 211) rgb(247, 249, 249);
+  transform: translate(2em, 1em);
+}
+
+#tooltip {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 1.00);
+  border: 0 solid black;
+  border-radius: 12px;
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  line-height: 1.5;
+  display: flex;
+  width: 350px;
+  max-height: 768px;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.user {
+  display: flex;
+  align-items: stretch;
+  padding: 12px 16px;
+
+  &:hover {
+    background-color: rgba(230, 236, 240, 0.7);
+  }
+
+  transition: background-color 0.2s;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  margin-right: 8px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+}
+
+.info {
+  min-width: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0px;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: rgb(15, 20, 25);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.screen_name {
+  font-size: 15px;
+  line-height: 20px;
+  color: rgb(83, 100, 113);
+}
+
+.description {
+  font-size: 15px;
+  line-height: 20px;
+  color: rgb(15, 20, 25);
+  padding-top: 4px;
+}
