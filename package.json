@@ -23,7 +23,7 @@
     "build:firefox": "plasmo build --target=firefox-mv3",
     "build": "pnpm run build:chrome && pnpm run build:firefox",
     "package:chrome": "plasmo package --target=chrome-mv3",
-    "package:firefox": ". ./.env.local && web-ext lint && web-ext build && web-ext sign --api-key=$WEB_EXT_API_KEY --api-secret=$WEB_EXT_API_SECRET",
+    "package:firefox": ". ./.env.local && web-ext lint && web-ext build && web-ext sign --api-key=$WEB_EXT_API_KEY --api-secret=$WEB_EXT_API_SECRET --channel=unlisted",
     "package": "pnpm run package:chrome && pnpm run package:firefox",
     "lint": "biome check",
     "lint:fix": "biome check --write"
