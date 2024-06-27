@@ -1,13 +1,13 @@
 {
   "name": "whofav",
   "displayName": "Whofav",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An extension which shows who favorited your tweet",
   "author": "haxibami <contact at haxibami dot net>",
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20"
   },
   "targets": {
     "default": {
@@ -23,7 +23,7 @@
     "build:firefox": "plasmo build --target=firefox-mv3",
     "build": "pnpm run build:chrome && pnpm run build:firefox",
     "package:chrome": "plasmo package --target=chrome-mv3",
-    "package:firefox": ". ./.env && web-ext lint && web-ext build && web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET",
+    "package:firefox": ". ./.env.local && web-ext lint && web-ext build && web-ext sign --api-key=$WEB_EXT_API_KEY --api-secret=$WEB_EXT_API_SECRET",
     "package": "pnpm run package:chrome && pnpm run package:firefox",
     "lint": "biome check",
     "lint:fix": "biome check --write"
@@ -41,7 +41,8 @@
     "@types/node": "20.14.8",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "typescript": "5.5.2"
+    "typescript": "5.5.2",
+    "web-ext": "^8.2.0"
   },
   "manifest": {
     "permissions": ["tabs", "activeTab", "cookies", "storage"],
@@ -50,6 +51,13 @@
       "gecko": {
         "id": "$FIREFOX_EXT_ID"
       }
+    }
+  },
+  "webExt": {
+    "sourceDir": "./build/firefox-mv3-prod",
+    "artifactsDir": "./build",
+    "build": {
+      "overwriteDest": true
     }
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"

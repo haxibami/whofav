@@ -9,11 +9,11 @@ import { Suspense, useEffect, useState } from "react";
 import { useMessage } from "@plasmohq/messaging/hook";
 import { useStorage } from "@plasmohq/storage/hook";
 
-// import { useMessage } from "../lib/util";
 import type { Message } from "../lib/types";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://x.com/*"],
+  exclude_matches: ["https://x.com/i/tweetdeck"],
 };
 
 export const getOverlayAnchor: PlasmoGetOverlayAnchor = async () =>
@@ -26,11 +26,6 @@ export const getStyle: PlasmoGetStyle = () => {
 };
 
 export const getShadowHostId = () => "whofav-tooltip";
-
-const Loading = () => {
-  console.log("loading");
-  return <div>Loading...</div>;
-};
 
 const Tooltip = () => {
   const [mode, setMode] = useState<"light" | "dark" | null>(null);
@@ -57,7 +52,7 @@ const Tooltip = () => {
     show && (
       <>
         <div id="tooltip" {...(mode && { "data-theme": mode })}>
-          <h2 id="title">いいねしたユーザ（最新{message.data.length}人）</h2>
+          <h2 id="title">いいねしたユーザ（最新{message.data.length}件）</h2>
           {message.data.map((user) => (
             <a href={`https://twitter.com/${user.screen_name}`} key={user.id}>
               <div className="user">

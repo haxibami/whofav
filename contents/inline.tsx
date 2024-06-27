@@ -11,11 +11,12 @@ import { useStorage } from "@plasmohq/storage/hook";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://x.com/*"],
+  exclude_matches: ["https://x.com/i/tweetdeck"],
 };
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = async () =>
   document.querySelector(
-    "div:has(> div > div > [data-testid='tweetText']) > :nth-child(4) > div > div > div > :nth-child(3)",
+    `div:has(> div > a[href*='/status/'][aria-describedby] > time ) > div:last-child`,
   );
 
 export const getStyle: PlasmoGetStyle = () => {
@@ -64,9 +65,7 @@ const Inline = () => {
             appearance: "none",
           }}
           onClick={async () => {
-            console.log(show);
             if (!show) {
-              // setShow(!show);
               const tweetId = window.location.pathname.split("/").pop();
               await sendToBackground({
                 name: "whofav-handler",

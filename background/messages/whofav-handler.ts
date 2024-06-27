@@ -1,8 +1,8 @@
 import { sendToContentScript } from "@plasmohq/messaging";
 import type { PlasmoMessaging } from "@plasmohq/messaging";
 
-import { getLikedUsers, getUserByID, getUsersByIds } from "../../lib/api";
-import type { LikedUsers, Message, User } from "../../lib/types";
+import { getLikedUsers, getUsersByIds } from "../../lib/api";
+import type { Message, User } from "../../lib/types";
 
 const handler: PlasmoMessaging.MessageHandler<Message, void> = async (req) => {
   const { value: ct0 } = await chrome.cookies.get({

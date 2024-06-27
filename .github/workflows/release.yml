@@ -1,0 +1,57 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+env:
+  PNPM_HOME: ~/.local/share/pnpm
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Setup pnpm with corepack
+        run: |
+          corepack enable pnpm
+          corepack prepare pnpm@latest --activate
+          SHELL="$(which bash)" pnpm setup
+          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+      - name: Get pnpm store path
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm store cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: Install node dependencies
+        run: pnpm i --frozen-lockfile
+      - name: Get tag name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Setup .env
+        run: |
+          touch .env.local
+          echo FIREFOX_EXT_ID=\"${{ secrets.FIREFOX_EXT_ID }}\" >> .env.local
+          echo WEB_EXT_API_KEY=\"${{ secrets.WEB_EXT_API_KEY }}\" >> .env.local
+          echo WEB_EXT_API_SECRET=\"${{ secrets.WEB_EXT_API_SECRET }}\" >> .env.local
+      - name: Build the extension
+        run: pnpm run build
+      - name: Package the extension into a zip artifact
+        run: pnpm run package
+      - name: Modify file name
+        run: |
+          mkdir ./dist
+          cp ./build/chrome-mv3-prod.zip ./dist/findmuskist-chrome-${{ env.TAG_NAME }}.zip
+          cp ./build/*.xpi ./dist/findmuskist-firefox-${{ env.TAG_NAME }}.xpi
+      - name: Create Release
+        run: gh release create ${{ env.TAG_NAME }} ./dist/* -n "Updated:"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
