@@ -36,12 +36,12 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.2",
-    "@types/chrome": "0.0.268",
-    "@types/node": "20.14.8",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "typescript": "5.5.2",
+    "@biomejs/biome": "1.9.4",
+    "@types/chrome": "0.0.297",
+    "@types/node": "20.17.14",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "typescript": "5.7.3",
     "web-ext": "^8.2.0"
   },
   "manifest": {
